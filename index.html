@@ -13,12 +13,20 @@
 		    that.width = options.width;
 		    that.height = options.height;
 		    that.image = options.image;
-		    that.render = function () {
-		        that.context.drawImage(that.image, options.x, options.y);
+		    that.x = options.x;
+		    that.y = options.y;
+		    that.velocity = 0;
+		    that.render = function (delta) {
+		    	if(a.y + 64 < canvas.height) {
+		    		velocity += 1.4 * delta;
+		    		a.y += velocity;
+		    	} else {
+		    		a.y = canvas.height - 64;
+		    	}
+		        that.context.drawImage(that.image, that.x, that.y);
 		    };
 		    return that;
 		}
-		var canvas = document.getElementById("mainframe");
 		// resize the canvas to fill browser window dynamically
 	    window.addEventListener('resize', resizeCanvas, false);
 	    function resizeCanvas() {
@@ -30,31 +38,26 @@
 	             */
 	            drawStuff(); 
 	    }
-	    currentY = 0;
+	    velocity = 0;
 	    lastTime = new Date().getTime();
+	    var canvas = document.getElementById("mainframe");
+	    var a = sprite({
+			    context: canvas.getContext("2d"),
+			    x: 512,
+			    y: 0,
+			    width: 64,
+			    height: 64,
+			    image: icon
+			});
 	    function drawStuff() {
 	    	canvas.width = canvas.width; // clears the canvas
 	    	currentTime = new Date().getTime();
 	    	deltaSec = (currentTime - lastTime) / 1000;
 	    	lastTime = currentTime;
-	    	if(currentY + 64 < canvas.height) {
-	    		currentY += 9.81 * deltaSec;
-	    	}
-	    	var a = sprite({
-			    context: canvas.getContext("2d"),
-			    x: 500,
-			    y: currentY,
-			    width: 64,
-			    height: 64,
-			    image: icon
-			});
-	        a.render();
+	    	a.render(deltaSec);
 	    }
 	    resizeCanvas();
-
 	    setInterval(drawStuff, 1000 / 30);
-	    
-	    
 	</script>
 </body>
 </html>
