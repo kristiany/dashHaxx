@@ -17,11 +17,11 @@
 		    that.y = options.y;
 		    that.velocity = 0;
 		    that.render = function (delta) {
-		    	if(a.y + 64 < canvas.height) {
-		    		velocity += 1.4 * delta;
-		    		a.y += velocity;
+		    	if(that.y + 64 < canvas.height) {
+		    		that.velocity += 1.4 * delta;
+		    		that.y += that.velocity;
 		    	} else {
-		    		a.y = canvas.height - 64;
+		    		that.y = canvas.height - 64;
 		    	}
 		        that.context.drawImage(that.image, that.x, that.y);
 		    };
@@ -38,10 +38,10 @@
 	             */
 	            drawStuff(); 
 	    }
-	    velocity = 0;
 	    lastTime = new Date().getTime();
 	    var canvas = document.getElementById("mainframe");
-	    var a = sprite({
+	    var blocks = [];
+	    blocks[0] = sprite({
 			    context: canvas.getContext("2d"),
 			    x: 512,
 			    y: 0,
@@ -54,10 +54,24 @@
 	    	currentTime = new Date().getTime();
 	    	deltaSec = (currentTime - lastTime) / 1000;
 	    	lastTime = currentTime;
-	    	a.render(deltaSec);
+	    	for (var i in blocks) {
+	    		blocks[i].render(deltaSec);
+	    	}
 	    }
-	    resizeCanvas();
 	    setInterval(drawStuff, 1000 / 30);
+	    function addBlock() {
+	    	var initX = Math.random() * canvas.width;
+	    	blocks[blocks.length] = sprite({
+			    context: canvas.getContext("2d"),
+			    x: initX,
+			    y: 0,
+			    width: 64,
+			    height: 64,
+			    image: icon
+			});
+	    }
+	    setInterval(addBlock, 1000);
+	    resizeCanvas();
 	</script>
 </body>
 </html>
