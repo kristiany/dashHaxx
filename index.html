@@ -4,10 +4,6 @@
 </head>
 <body>
 	<canvas id="mainframe"></canvas>
-	<script src="blockjs/block.js"></script>
-	<script src="blockjs/game.js"></script>
-	<script src="blockjs/layer.js"></script>
-	<script src="blockjs/slice.js"></script>
 	<script type="text/javascript">
 		var icon = new Image();
 		icon.src = "images/test.png";
@@ -18,16 +14,7 @@
 		    that.height = options.height;
 		    that.image = options.image;
 		    that.render = function () {
-		        that.context.drawImage(
-		           that.image,
-		           0,
-		           0,
-		           that.width,
-		           that.height,
-		           0,
-		           0,
-		           that.width,
-		           that.height);
+		        that.context.drawImage(that.image, options.x, options.y);
 		    };
 		    return that;
 		}
@@ -43,9 +30,20 @@
 	             */
 	            drawStuff(); 
 	    }
+	    currentY = 0;
+	    lastTime = new Date().getTime();
 	    function drawStuff() {
+	    	canvas.width = canvas.width; // clears the canvas
+	    	currentTime = new Date().getTime();
+	    	deltaSec = (currentTime - lastTime) / 1000;
+	    	lastTime = currentTime;
+	    	if(currentY + 64 < canvas.height) {
+	    		currentY += 9.81 * deltaSec;
+	    	}
 	    	var a = sprite({
 			    context: canvas.getContext("2d"),
+			    x: 500,
+			    y: currentY,
 			    width: 64,
 			    height: 64,
 			    image: icon
@@ -53,6 +51,10 @@
 	        a.render();
 	    }
 	    resizeCanvas();
+
+	    setInterval(drawStuff, 1000 / 30);
+	    
+	    
 	</script>
 </body>
 </html>
