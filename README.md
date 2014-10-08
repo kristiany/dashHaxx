@@ -1,4 +1,4 @@
 dashHaxx
 ========
 
-Uses https://github.com/williammalone/BlocksJS to dash!
+Uses HTML5 to dash!
