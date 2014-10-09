@@ -4,6 +4,7 @@
 </head>
 <body>
 	<canvas id="mainframe"></canvas>
+	<script src="sprite.js"></script>
 	<script type="text/javascript">
 		var blockWidth = 64;
 		var blockHeight = 64;
@@ -11,38 +12,6 @@
 		var gravity = 1.4;
 		var icon = new Image();
 		icon.src = "images/test.png";
-		function sprite (options) {
-		    var that = {};
-		    that.context = options.context;
-		    that.width = options.width;
-		    that.height = options.height;
-		    that.image = options.image;
-		    that.x = options.x;
-		    that.y = options.y;
-		    that.velocity = 0;
-		    that.update = function (delta, i, moving, landed) {
-		    	var column = Math.floor(that.x / 64);	
-		    	if(landed[column] != undefined && landed[column][0] != undefined && that.y + blockHeight < landed[column][0].y
-		    		|| (landed[column] == undefined || landed[column][0] == undefined) && that.y + blockHeight < canvas.height) {
-		    		that.velocity += gravity * delta;
-		    		that.y += that.velocity;
-		    	} 
-		    	else {
-		    		if(landed[column] == undefined || landed[column][0] == undefined) {
-		    			that.y = canvas.height - blockHeight;
-		    			landed[column] = new Array();
-		    		} 
-		    		else {
-		    			that.y = landed[column][0].y - blockHeight;
-		    		}
-		    		landed[column].unshift(moving.splice(i, 1).pop());
-		    	}	
-		    }
-		    that.render = function () {
-		        that.context.drawImage(that.image, that.x, that.y);
-		    };
-		    return that;
-		}
 	    window.addEventListener('resize', resizeCanvas, false);
 	    function resizeCanvas() {
 	            canvas.width = window.innerWidth;
