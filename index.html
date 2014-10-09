@@ -5,6 +5,10 @@
 <body>
 	<canvas id="mainframe"></canvas>
 	<script type="text/javascript">
+		var blockWidth = 64;
+		var blockHeight = 64;
+		var FPS = 30;
+		var gravity = 1.4;
 		var icon = new Image();
 		icon.src = "images/test.png";
 		function sprite (options) {
@@ -17,11 +21,11 @@
 		    that.y = options.y;
 		    that.velocity = 0;
 		    that.update = function (delta, i, moving, landed) {
-		    	if(that.y + 64 < canvas.height) {
-		    		that.velocity += 1.4 * delta;
+		    	if(that.y + blockHeight < canvas.height) {
+		    		that.velocity += gravity * delta;
 		    		that.y += that.velocity;
 		    	} else {
-		    		that.y = canvas.height - 64;
+		    		that.y = canvas.height - blockHeight;
 		    		landed.push(moving.splice(i, 1).pop());
 		    	}	
 		    }
@@ -30,15 +34,10 @@
 		    };
 		    return that;
 		}
-		// resize the canvas to fill browser window dynamically
 	    window.addEventListener('resize', resizeCanvas, false);
 	    function resizeCanvas() {
 	            canvas.width = window.innerWidth;
 	            canvas.height = window.innerHeight;
-	            /**
-	             * Your drawings need to be inside this function otherwise they will be reset when 
-	             * you resize the browser window and the canvas goes will be cleared.
-	             */
 	            drawStuff(); 
 	    }
 	    lastTime = new Date().getTime();
@@ -49,8 +48,8 @@
 			    context: canvas.getContext("2d"),
 			    x: 512,
 			    y: 0,
-			    width: 64,
-			    height: 64,
+			    width: blockWidth,
+			    height: blockHeight,
 			    image: icon
 			}));
 	    function drawStuff() {
@@ -66,7 +65,7 @@
 	    		landedBlocks[i].render();
 	    	}
 	    }
-	    setInterval(drawStuff, 1000 / 30);
+	    setInterval(drawStuff, 1000 / FPS);
 	    function addBlock() {
 	    	var randomX = Math.random() * canvas.width;
 	    	var initX = randomX - randomX % 64;
@@ -74,8 +73,8 @@
 			    context: canvas.getContext("2d"),
 			    x: initX,
 			    y: 0,
-			    width: 64,
-			    height: 64,
+			    width: blockWidth,
+			    height: blockHeight,
 			    image: icon
 			}));
 	    }
