@@ -21,12 +21,21 @@
 		    that.y = options.y;
 		    that.velocity = 0;
 		    that.update = function (delta, i, moving, landed) {
-		    	if(that.y + blockHeight < canvas.height) {
+		    	var column = Math.floor(that.x / 64);	
+		    	if(landed[column] != undefined && landed[column][0] != undefined && that.y + blockHeight < landed[column][0].y
+		    		|| (landed[column] == undefined || landed[column][0] == undefined) && that.y + blockHeight < canvas.height) {
 		    		that.velocity += gravity * delta;
 		    		that.y += that.velocity;
-		    	} else {
-		    		that.y = canvas.height - blockHeight;
-		    		landed.push(moving.splice(i, 1).pop());
+		    	} 
+		    	else {
+		    		if(landed[column] == undefined || landed[column][0] == undefined) {
+		    			that.y = canvas.height - blockHeight;
+		    			landed[column] = new Array();
+		    		} 
+		    		else {
+		    			that.y = landed[column][0].y - blockHeight;
+		    		}
+		    		landed[column].unshift(moving.splice(i, 1).pop());
 		    	}	
 		    }
 		    that.render = function () {
@@ -63,7 +72,11 @@
 	    		movingBlocks[i].render();
 	    	}
 	    	for (var i=0; i<landedBlocks.length; i++) {
-	    		landedBlocks[i].render();
+	    		if(landedBlocks[i] != undefined) {
+	    			for (var j=0; j<landedBlocks[i].length; j++) {
+	    				landedBlocks[i][j].render();
+	    			}
+	    		}
 	    	}
 	    }
 	    setInterval(drawStuff, 1000 / FPS);
