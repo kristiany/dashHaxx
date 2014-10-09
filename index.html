@@ -40,7 +40,7 @@
 	            canvas.height = window.innerHeight;
 	            drawStuff(); 
 	    }
-	    lastTime = new Date().getTime();
+	    
 	    var canvas = document.getElementById("mainframe");
 	    var movingBlocks = new Array();
 	    var landedBlocks = new Array();
@@ -52,6 +52,7 @@
 			    height: blockHeight,
 			    image: icon
 			}));
+	    var lastTime = new Date().getTime();
 	    function drawStuff() {
 	    	canvas.width = canvas.width; // clears the canvas
 	    	currentTime = new Date().getTime();
