@@ -18,18 +18,9 @@
 	            canvas.height = window.innerHeight;
 	            drawStuff(); 
 	    }
-	    
 	    var canvas = document.getElementById("mainframe");
 	    var movingBlocks = new Array();
 	    var landedBlocks = new Array();
-	    movingBlocks.push(sprite({
-			    context: canvas.getContext("2d"),
-			    x: 512,
-			    y: 0,
-			    width: blockWidth,
-			    height: blockHeight,
-			    image: icon
-			}));
 	    var lastTime = new Date().getTime();
 	    function drawStuff() {
 	    	canvas.width = canvas.width; // clears the canvas
