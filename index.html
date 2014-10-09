@@ -54,13 +54,14 @@
 	    	currentTime = new Date().getTime();
 	    	deltaSec = (currentTime - lastTime) / 1000;
 	    	lastTime = currentTime;
-	    	for (var i in blocks) {
+	    	for (var i=0; i<blocks.length; i++) {
 	    		blocks[i].render(deltaSec);
 	    	}
 	    }
 	    setInterval(drawStuff, 1000 / 30);
 	    function addBlock() {
-	    	var initX = Math.random() * canvas.width;
+	    	var randomX = Math.random() * canvas.width;
+	    	var initX = randomX - randomX % 64;
 	    	blocks[blocks.length] = sprite({
 			    context: canvas.getContext("2d"),
 			    x: initX,
