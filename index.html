@@ -53,10 +53,9 @@
 	    function addBlock() {
 	    	var randomX = Math.random() * canvas.width;
 	    	var initX = randomX - randomX % 64;
-	    	var t = Math.random();
-	    	var red = linear(t, color1Red, color2Red);
-			var green = linear(t, color1Green, color2Green);
-			var blue = linear(t, color1Blue, color2Blue);
+	    	var red = linear(Math.random(), color1Red, color2Red);
+			var green = linear(Math.random(), color1Green, color2Green);
+			var blue = linear(Math.random(), color1Blue, color2Blue);
 	    	movingBlocks.push(sprite({
 			    context: canvas.getContext("2d"),
 			    x: initX,
