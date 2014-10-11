@@ -9,7 +9,7 @@ function sprite (options) {
 	that.color = "rgb(" + options.red + "," + options.green + "," + options.blue + ")";
 	console.log(that.color);
     that.update = function (delta, i, moving, landed) {
-    	var column = Math.floor(that.x / 64);	
+    	var column = Math.floor(that.x / that.width);	
     	if(landed[column] != undefined && landed[column][0] != undefined && that.y + that.height < landed[column][0].y
     		|| (landed[column] == undefined || landed[column][0] == undefined) && that.y + that.height < canvas.height) {
     		that.velocity += gravity * delta;

@@ -6,7 +6,7 @@
 	<canvas id="mainframe"></canvas>
 	<script src="sprite.js"></script>
 	<script type="text/javascript">
-		var blockWidth = 64;
+		var blockWidth = 32;
 		var blockHeight = 16;
 		var FPS = 30;
 		var gravity = 1.4;
@@ -52,7 +52,7 @@
 	    var color2Blue = randomColorUnit();
 	    function addBlock() {
 	    	var randomX = Math.random() * canvas.width;
-	    	var initX = randomX - randomX % 64;
+	    	var initX = randomX - randomX % blockWidth;
 	    	var red = linear(Math.random(), color1Red, color2Red);
 			var green = linear(Math.random(), color1Green, color2Green);
 			var blue = linear(Math.random(), color1Blue, color2Blue);
