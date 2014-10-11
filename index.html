@@ -7,11 +7,9 @@
 	<script src="sprite.js"></script>
 	<script type="text/javascript">
 		var blockWidth = 64;
-		var blockHeight = 64;
+		var blockHeight = 16;
 		var FPS = 30;
 		var gravity = 1.4;
-		var icon = new Image();
-		icon.src = "images/test.png";
 	    window.addEventListener('resize', resizeCanvas, false);
 	    function resizeCanvas() {
 	            canvas.width = window.innerWidth;
@@ -49,7 +47,6 @@
 			    y: 0,
 			    width: blockWidth,
 			    height: blockHeight,
-			    image: icon
 			}));
 	    }
 	    setInterval(addBlock, 1000);
