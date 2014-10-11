@@ -37,16 +37,35 @@
 	    		}
 	    	}
 	    }
+	    function linear(t, color1, color2) {
+	    	return Math.floor(color1 * (1 - t) + t * color2);
+	    }
+	    function randomColorUnit() {
+	    	return Math.floor(Math.random() * 256);
+	    }
 	    setInterval(drawStuff, 1000 / FPS);
+	    var color1Red = randomColorUnit();
+	    var color1Green = randomColorUnit();
+	    var color1Blue = randomColorUnit();
+	    var color2Red = randomColorUnit();
+	    var color2Green = randomColorUnit();
+	    var color2Blue = randomColorUnit();
 	    function addBlock() {
 	    	var randomX = Math.random() * canvas.width;
 	    	var initX = randomX - randomX % 64;
+	    	var t = Math.random();
+	    	var red = linear(t, color1Red, color2Red);
+			var green = linear(t, color1Green, color2Green);
+			var blue = linear(t, color1Blue, color2Blue);
 	    	movingBlocks.push(sprite({
 			    context: canvas.getContext("2d"),
 			    x: initX,
 			    y: 0,
 			    width: blockWidth,
 			    height: blockHeight,
+			    red: red,
+			    green: green,
+			    blue: blue
 			}));
 	    }
 	    setInterval(addBlock, 1000);
