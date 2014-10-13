@@ -1,4 +1,5 @@
 function sprite (options) {
+	var gravity = 1.4;
     var that = {};
     that.context = options.context;
     that.width = options.width;
