@@ -10,13 +10,14 @@ function sprite (options) {
 	console.log(that.color);
     that.update = function (delta, i, moving, landed) {
     	var column = Math.floor(that.x / that.width);	
-    	if(landed[column] != undefined && landed[column][0] != undefined && that.y + that.height < landed[column][0].y
-    		|| (landed[column] == undefined || landed[column][0] == undefined) && that.y + that.height < canvas.height) {
+    	var noLanded = landed[column] == undefined || landed[column][0] == undefined;
+    	if(!noLanded && that.y + that.height < landed[column][0].y
+    		|| noLanded && that.y + that.height < canvas.height) {
     		that.velocity += gravity * delta;
     		that.y += that.velocity;
     	} 
     	else {
-    		if(landed[column] == undefined || landed[column][0] == undefined) {
+    		if(noLanded) {
     			that.y = canvas.height - that.height;
     			landed[column] = new Array();
     		} 
