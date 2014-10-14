@@ -4,45 +4,35 @@
 </head>
 <body>
 	<canvas id="mainframe"></canvas>
+	<script src="blocks.js"></script>
 	<script src="sprite.js"></script>
 	<script type="text/javascript">
 		var blockWidth = 32;
 		var blockHeight = 16;
 		var FPS = 30;
 	    window.addEventListener('resize', resizeCanvas, false);
+	    var canvas = document.getElementById("mainframe");
 	    function resizeCanvas() {
 	            canvas.width = window.innerWidth;
 	            canvas.height = window.innerHeight;
 	            drawStuff(); 
 	    }
-	    var canvas = document.getElementById("mainframe");
-	    var movingBlocks = new Array();
-	    var landedBlocks = new Array();
+	    var blocks = blocks({canvas: canvas});
 	    var lastTime = new Date().getTime();
 	    function drawStuff() {
 	    	canvas.width = canvas.width; // clears the canvas
 	    	currentTime = new Date().getTime();
 	    	deltaSec = (currentTime - lastTime) / 1000;
 	    	lastTime = currentTime;
-	    	for (var i=0; i<movingBlocks.length; i++) {
-	    		movingBlocks[i].update(deltaSec, i, movingBlocks, landedBlocks);
-	    		movingBlocks[i].render();
-	    	}
-	    	for (var i=0; i<landedBlocks.length; i++) {
-	    		if(landedBlocks[i] != undefined) {
-	    			for (var j=0; j<landedBlocks[i].length; j++) {
-	    				landedBlocks[i][j].render();
-	    			}
-	    		}
-	    	}
+	    	blocks.render(deltaSec);
 	    }
+	    setInterval(drawStuff, 1000 / FPS);
 	    function linear(t, color1, color2) {
 	    	return Math.floor(color1 * (1 - t) + t * color2);
 	    }
 	    function randomColorUnit() {
 	    	return Math.floor(Math.random() * 256);
 	    }
-	    setInterval(drawStuff, 1000 / FPS);
 	    var color1Red = randomColorUnit();
 	    var color1Green = randomColorUnit();
 	    var color1Blue = randomColorUnit();
@@ -55,7 +45,7 @@
 	    	var red = linear(Math.random(), color1Red, color2Red);
 			var green = linear(Math.random(), color1Green, color2Green);
 			var blue = linear(Math.random(), color1Blue, color2Blue);
-	    	movingBlocks.push(sprite({
+	    	blocks.addBlock(sprite({
 			    context: canvas.getContext("2d"),
 			    x: initX,
 			    y: 0,

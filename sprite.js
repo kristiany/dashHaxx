@@ -9,25 +9,24 @@ function sprite (options) {
     that.velocity = 0;
 	that.color = "rgb(" + options.red + "," + options.green + "," + options.blue + ")";
 	console.log(that.color);
-    that.update = function (delta, i, moving, landed) {
+    that.update = function (delta, i, blocks) {
     	var column = Math.floor(that.x / that.width);	
-    	var firstBlock = landed[column] == undefined || landed[column][0] == undefined;
+    	var hasNoBlock = blocks.hasNoBlock(column);
     	var currentBottomY = that.y + that.height;
-    	if(!firstBlock && currentBottomY < landed[column][0].y || firstBlock && currentBottomY < canvas.height) {
+    	if(blocks.falling(column, currentBottomY)) {
     		that.velocity += gravity * delta;
     		that.y += that.velocity;
     	} 
     	else {
-    		if(firstBlock) {
+    		if(hasNoBlock) {
     			that.y = canvas.height - that.height;
-    			landed[column] = new Array();
     		} 
     		else {
-    			that.y = landed[column][0].y - that.height;
+    			that.y = blocks.firstBlock(column).y - that.height;
     		}
-    		landed[column].unshift(moving.splice(i, 1).pop());
+    		blocks.landed(column, i);
     	}	
-    }
+    };
     that.render = function () {
     	that.context.fillStyle = that.color;
         that.context.fillRect(that.x, that.y, that.width, that.height);
