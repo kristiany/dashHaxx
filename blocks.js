@@ -36,5 +36,12 @@ function blocks (options) {
     that.firstBlock = function (column) {
         return that.landedBlocks[column][0];
     }; 
+    that.renderWithOffset = function (delta, offsetX) {
+        var context = that.canvas.getContext("2d");
+        context.save();    
+        context.translate(offsetX, 0);
+        that.render(delta);
+        context.restore();    
+    }
     return that;
 }
