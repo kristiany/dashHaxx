@@ -10,7 +10,7 @@ function blocks (options) {
     		that.movingBlocks[i].render();
     	}
     	for (var i=0; i<that.landedBlocks.length; i++) {
-    		if(that.landedBlocks[i] != undefined) { // TODO remove??
+    		if(that.landedBlocks[i] != undefined) { 
     			for (var j=0; j<that.landedBlocks[i].length; j++) {
     				that.landedBlocks[i][j].render();
     			}
