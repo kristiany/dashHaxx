@@ -6,6 +6,7 @@
 	<canvas id="mainframe"></canvas>
 	<script src="blocks.js"></script>
 	<script src="sprite.js"></script>
+	<script src="spawner.js"></script>
 	<script type="text/javascript">
 		var blockWidth = 32;
 		var blockHeight = 16;
@@ -27,34 +28,11 @@
 	    	blocks.render(deltaSec);
 	    }
 	    setInterval(drawStuff, 1000 / FPS);
-	    function linear(t, color1, color2) {
-	    	return Math.floor(color1 * (1 - t) + t * color2);
-	    }
-	    function randomColorUnit() {
-	    	return Math.floor(Math.random() * 256);
-	    }
-	    var color1Red = randomColorUnit();
-	    var color1Green = randomColorUnit();
-	    var color1Blue = randomColorUnit();
-	    var color2Red = randomColorUnit();
-	    var color2Green = randomColorUnit();
-	    var color2Blue = randomColorUnit();
+	    var spawner = spawner({canvas: canvas, blockWidth: blockWidth, blockHeight: blockHeight});
 	    function addBlock() {
 	    	var randomX = Math.random() * canvas.width;
 	    	var initX = randomX - randomX % blockWidth;
-	    	var red = linear(Math.random(), color1Red, color2Red);
-			var green = linear(Math.random(), color1Green, color2Green);
-			var blue = linear(Math.random(), color1Blue, color2Blue);
-	    	blocks.addBlock(sprite({
-			    context: canvas.getContext("2d"),
-			    x: initX,
-			    y: 0,
-			    width: blockWidth,
-			    height: blockHeight,
-			    red: red,
-			    green: green,
-			    blue: blue
-			}));
+	    	spawner.spawn(blocks, initX, 0);	
 	    }
 	    setInterval(addBlock, 1000);
 	    resizeCanvas();
