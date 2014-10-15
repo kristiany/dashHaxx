@@ -11,7 +11,7 @@
 		var blockWidth = 32;
 		var blockHeight = 16;
 		var FPS = 30;
-		var scrollspeed = 5; // pixels / second
+		var scrollspeed = blockWidth / 30; // pixels / second
 	    window.addEventListener('resize', resizeCanvas, false);
 	    var canvas = document.getElementById("mainframe");
 	    function resizeCanvas() {
@@ -27,24 +27,18 @@
 	    	currentTime = new Date().getTime();
 	    	deltaSec = (currentTime - lastTime) / 1000;
 	    	lastTime = currentTime;
-	    	offsetX += -deltaSec * scrollspeed
+	    	offsetX -= deltaSec * scrollspeed
 	    	blocks.renderWithOffset(deltaSec, offsetX);
 	    }
+	    resizeCanvas();
 	    setInterval(drawStuff, 1000 / FPS);
-	    function linear(t, color1, color2) {
-	    	return Math.floor(color1 * (1 - t) + t * color2);
-	    }
-	    function randomColorUnit() {
-	    	return Math.floor(Math.random() * 256);
-	    }
 	    var spawner = spawner({canvas: canvas, blockWidth: blockWidth, blockHeight: blockHeight});
+	    var initX = canvas.width - blockWidth;
+	    setInterval(function () { initX += blockWidth; }, 1000 * 30);
 	    function addBlock() {
-	    	var randomX = Math.random() * canvas.width;
-	    	var initX = randomX - randomX % blockWidth;
 	    	spawner.spawn(blocks, initX, 0);	
 	    }
-	    setInterval(addBlock, 1000);
-	    resizeCanvas();
+	    setInterval(addBlock, 2000);
 	</script>
 </body>
 </html>
